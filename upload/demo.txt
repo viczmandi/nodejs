@@ -1,0 +1,17 @@
+Zipkin is very efficient tool for distributed tracing in microservice ecosystem. Distributed tracing, in general, is latency measurement of each component in a distributed transaction where multiple microservices are invoked to serve a single business usecase.
+
+If you are troubleshooting latency problems or errors in ecosystem, you can filter or sort all traces based on the application, length of trace, annotation, or timestamp. By analyzing these traces, you can decide which components are not performing as expected, and you can fix them.
+
+Internally it has 4 modules –
+
+-Collector – Once any component sends the trace data arrives to Zipkin collector daemon, it is validated, stored, and indexed for lookups by the Zipkin collector.
+-Storage – This module store and index the lookup data in backend. Cassandra, ElasticSearch and MySQL are supported.
+-Search – This module provides a simple JSON API for finding and retrieving traces stored in backend. The primary consumer of this API is the Web UI.
+-Web UI – A very nice UI interface for viewing traces.
+
+One more thing needed for Zipkin. Sleuth is a tool from Spring cloud family. It is used to generate the trace id, span id and add these information to the service calls in the headers so that It can be used by tools like Zipkin and ELK etc. to store, index and process log files. A Span is the basic unit of work. A set of spans forming a tree-like structure called a Trace. As it is from spring cloud family, once added to the CLASSPATH, it automatically integrated to the common communication channels like –
+
+-requests made with the RestTemplate etc.
+-requests that pass through a Netflix Zuul microproxy
+-HTTP headers received at Spring MVC controllers
+-requests over messaging technologies like ActiveMQ etc.
